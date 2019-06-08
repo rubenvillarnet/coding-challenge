@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -6,7 +7,7 @@ const mongoose = require('mongoose')
 const debug = require('debug')('back:app');
 
 mongoose
-.connect('mongodb://localhost/innocv-back', {useNewUrlParser: true})
+.connect(process.env.DB, {useNewUrlParser: true})
 .then(x => {
   debug(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
 })

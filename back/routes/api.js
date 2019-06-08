@@ -34,6 +34,8 @@ router.get('/', swaggerUi.setup(specs, options));
  *
  * /api/users:
  *   get:
+ *     tags:
+ *      - users
  *     description: list all users
  *     summary: all users
  *     produces:
@@ -57,6 +59,8 @@ router.get("/users/", function(req, res, next) {
  *
  * /api/users/:id:
  *   get:
+ *     tags:
+ *      - users
  *     summary: one single user
  *     description: return a single user
  *     produces:
@@ -83,6 +87,8 @@ router.get("/users/:id", function(req, res, next){
  *
  * /api/users/new:
  *   post:
+ *     tags:
+ *      - users
  *     summary: new user
  *     description: adds a new user to the database
  *     consumes:
@@ -130,6 +136,8 @@ router.post("/users/new", function(req, res, next){
  *
  * /api/users/:id:
  *   patch:
+ *     tags:
+ *      - users
  *     summary: edit user
  *     description: edits existing user in the database
  *     consumes:
@@ -184,6 +192,8 @@ router.patch("/users/:id", function(req, res, next){
  *
  * /api/users/:id:
  *   delete:
+ *     tags:
+ *      - users
  *     summary: delete user
  *     description: deletes existing user in the database
  *     consumes:
