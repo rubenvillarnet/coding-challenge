@@ -32,7 +32,7 @@ router.get('/', swaggerUi.setup(specs, options));
 /**
  * @swagger
  *
- * /api/users:
+ * /users:
  *   get:
  *     tags:
  *      - users
@@ -57,7 +57,7 @@ router.get("/users/", function(req, res, next) {
 /**
  * @swagger
  *
- * /api/users/:id:
+ * /users/:id:
  *   get:
  *     tags:
  *      - users
@@ -79,13 +79,16 @@ router.get("/users/", function(req, res, next) {
  */
 
 router.get("/users/:id", function(req, res, next){
-  User.findById(req.params.id, (err, user) => res.json(user))
+  User.findById(req.params.id, (err, user) => {
+    if(err) return res.status(500).send(err)
+    return res.json(user)
+  });
 });
 
 /**
  * @swagger
  *
- * /api/users/new:
+ * /users/new:
  *   post:
  *     tags:
  *      - users
@@ -134,7 +137,7 @@ router.post("/users/new", function(req, res, next){
 /**
  * @swagger
  *
- * /api/users/:id:
+ * /users/:id:
  *   patch:
  *     tags:
  *      - users
@@ -190,7 +193,7 @@ router.patch("/users/:id", function(req, res, next){
 /**
  * @swagger
  *
- * /api/users/:id:
+ * /users/:id:
  *   delete:
  *     tags:
  *      - users
