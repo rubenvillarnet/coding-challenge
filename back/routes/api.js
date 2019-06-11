@@ -88,7 +88,7 @@ router.get("/users/:id", function(req, res, next){
 /**
  * @swagger
  *
- * /users/new:
+ * /users:
  *   post:
  *     tags:
  *      - users
@@ -125,7 +125,7 @@ router.get("/users/:id", function(req, res, next){
  *        description: invalid parameters
  */
 
-router.post("/users/new", function(req, res, next){
+router.post("/users/", function(req, res, next){
   const { name, birthdate} = req.body
   const newUser = new User({name, birthdate})
 
