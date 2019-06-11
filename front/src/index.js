@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+
 import { Provider } from 'react-redux'
 import {store} from './lib/redux/store'
 
@@ -11,9 +14,11 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+      <Router>
+        <App />
+      </Router>
+    </MuiPickersUtilsProvider>
   </Provider>
 , document.getElementById('root'));
 

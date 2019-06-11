@@ -4,7 +4,13 @@ import {dismissUser, showSnackbar} from "../lib/redux/actions"
 import DataProvider from "../lib/dataProvider"
 import PropTypes from 'prop-types';
 
+import { KeyboardDatePicker } from "@material-ui/pickers";
+import moment from "moment";
+import "moment/locale/es";
+
 import { Button, Typography, List, ListItem, ListItemText, FormControl, InputLabel, Input } from '@material-ui/core';
+
+moment.locale("es");
 
 
 class UserDetail extends Component {
@@ -13,6 +19,7 @@ class UserDetail extends Component {
     this.data = new DataProvider()
     this.state={
       edit: false,
+      selectedDate: new Date()
     }
   }
 
@@ -21,13 +28,20 @@ class UserDetail extends Component {
     this.props.dismissUser()
   }
 
+  handleDateChange(newDate) {
+    this.setState({
+      ...this.state,
+      selectedDate: newDate
+    })
+  }
+
   editUser(e){
     e.preventDefault()
-    const {name, birthdate} = e.currentTarget.elements
+    const {name} = e.currentTarget.elements
     this.data.edituser({
       id: this.props.userInfo.id,
       name: name.value,
-      birthdate: birthdate.value
+      birthdate: this.state.selectedDate
     }).then(editUserData => {
       if(editUserData.status === 200){
         const timestamp = new Date(editUserData.updatedAt)
@@ -36,10 +50,13 @@ class UserDetail extends Component {
       }else{
         this.props.showSnackbar(`Something wrong has happened. Status: ${editUserData.status}`)
       }
+      name.value = ""
+      this.setState({
+        ...this.state,
+        selectedDate: new Date()
+      })
+      this.props.listUsers()
     })
-    name.value= ""
-    birthdate.value= ""
-    this.toggleEdit()
   }
 
   toggleEdit(){
@@ -60,17 +77,18 @@ class UserDetail extends Component {
               <InputLabel htmlFor="name">Name</InputLabel>
               <Input
                 required={true}
+                defaultValue={name}
                 type="text"
                 id="name"/>
             </FormControl>
-            <FormControl className="form-control">
-          <InputLabel htmlFor="birthdate">Birthdate</InputLabel>
-          <Input 
-            required={true}
-            type="text"
-            id="birthdate"
-            />
-        </FormControl>
+            <KeyboardDatePicker
+                      label="Birthday"
+                      value={birthdate}
+                      onChange={(newDate)=> this.handleDateChange(newDate)}
+                      animateYearScrolling
+                      disableFuture
+                      format="DD/MM/YYYY"
+                    />
         <Button
           type="submit"
           color="primary"

@@ -6,6 +6,10 @@ import Topbar from './Topbar';
 import DataProvider from "../lib/dataProvider"
 import PropTypes from 'prop-types';
 
+import { KeyboardDatePicker } from "@material-ui/pickers";
+import moment from "moment";
+import "moment/locale/es";
+
 
 import {
   Typography, Drawer, FormControl, InputLabel,
@@ -15,32 +19,40 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 
+moment.locale("es");
 
 class UsersList extends Component {
   constructor(props) {
     super(props)
     this.data = new DataProvider()
     this.state = {
-      rightDrawer: false
+      rightDrawer: false,
+      selectedDate: new Date()
     }
   }
 
   componentDidMount() {
-    this.props.listUsers(this.props.page)
+    this.props.listUsers()
   }
 
   showUserInfo(e, id) {
     e.preventDefault()
-    console.log(id)
     this.props.getUser(id)
+  }
+
+  handleDateChange(newDate) {
+    this.setState({
+      ...this.state,
+      selectedDate: newDate
+    })
   }
 
   createUser(e) {
     e.preventDefault()
-    const { name, birthdate } = e.currentTarget.elements
+    const { name } = e.currentTarget.elements
     this.data.newUser({
       name: name.value,
-      birthdate: birthdate.value
+      birthdate: this.state.selectedDate
     }).then(newUserData => {
       this.toggleDrawer(false)
       if (newUserData.status === 200) {
@@ -50,9 +62,14 @@ class UsersList extends Component {
       } else {
         this.props.showSnackbar(`Something wrong has happened. Status: ${newUserData.status}`)
       }
+      name.value = ""
+      this.setState({
+        ...this.state,
+        selectedDate: new Date()
+      })
+      this.props.listUsers()
     })
-    name.value = ""
-    birthdate.value = ""
+    
   }
 
   toggleDrawer(shown) {
@@ -65,7 +82,6 @@ class UsersList extends Component {
   render() {
 
     const { userData, userInfo} = this.props
-    console.log(userData)
     return (
       <React.Fragment>
        <Topbar />
@@ -123,13 +139,14 @@ class UsersList extends Component {
                         id="name"
                       />
                     </FormControl>
-                    <FormControl className="form-control">
-                      <InputLabel htmlFor="birthdate">Birthdate</InputLabel>
-                      <Input
-                        type="text"
-                        id="birthdate"
-                      />
-                    </FormControl>
+                    <KeyboardDatePicker
+                      label="Birthday"
+                      value={this.state.selectedDate}
+                      onChange={(newDate)=> this.handleDateChange(newDate)}
+                      animateYearScrolling
+                      disableFuture
+                      format="DD/MM/YYYY"
+                    />
                     <Button
                       type="submit"
                       color="primary"
