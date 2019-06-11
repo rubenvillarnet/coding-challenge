@@ -20,7 +20,8 @@ export const listUsers = () =>{
 export const getUser = id =>{
   return dispatch => {
     return data.getUser(id)
-    .then(userInfo => dispatch({type:GET_USER, userInfo: userInfo.data}))
+    .then(userInfo => dispatch({type:GET_USER, userInfo: userInfo}))
+    .catch(error => console.log(error))
   }
 }
 

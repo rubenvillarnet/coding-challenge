@@ -31,6 +31,7 @@ class UsersList extends Component {
 
   showUserInfo(e, id) {
     e.preventDefault()
+    console.log(id)
     this.props.getUser(id)
   }
 
@@ -43,9 +44,9 @@ class UsersList extends Component {
     }).then(newUserData => {
       this.toggleDrawer(false)
       if (newUserData.status === 200) {
-        const timestamp = new Date(newUserData.data.createdAt)
+        const timestamp = new Date(newUserData.createdAt)
         const now = `${timestamp.getHours()}:${(timestamp.getMinutes() < 10 ? '0' : '')}${timestamp.getMinutes()}`
-        this.props.showSnackbar(`User created at ${now} with id ${newUserData.data.id}`)
+        this.props.showSnackbar(`User created at ${now} with id ${newUserData._id}`)
       } else {
         this.props.showSnackbar(`Something wrong has happened. Status: ${newUserData.status}`)
       }
@@ -64,12 +65,12 @@ class UsersList extends Component {
   render() {
 
     const { userData, userInfo} = this.props
-
+    console.log(userData)
     return (
       <React.Fragment>
        <Topbar />
         <div className="Content">
-          {userData.data ?
+          {userData.length !== 0?
             <div className="table-container">
               <Typography component="h1" variant="h4" className="title">Users list</Typography>
               <Paper className="paper">
@@ -82,12 +83,12 @@ class UsersList extends Component {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {userData.data.map(user => {
-                      return <TableRow key={user.id}>
+                    {userData.map(user => {
+                      return <TableRow key={user._id}>
                         <TableCell>{user.name}</TableCell>
                         <TableCell>{user.birthdate}</TableCell>
                         <TableCell><Button 
-                          onClick={e => this.showUserInfo(e, user.id)}
+                          onClick={e => this.showUserInfo(e, user._id)}
                           color="primary"><AddIcon />Info</Button></TableCell>
                       </TableRow>
                     })}
@@ -163,13 +164,11 @@ class UsersList extends Component {
 
 UsersList.propTypes = {
   user: PropTypes.object,
-  userData: PropTypes.shape({
-    data: PropTypes.arrayOf(PropTypes.shape({
+  userData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,
       birthdate: PropTypes.string
     })),
-  }),
   userInfo: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.object

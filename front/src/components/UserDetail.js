@@ -30,7 +30,7 @@ class UserDetail extends Component {
       birthdate: birthdate.value
     }).then(editUserData => {
       if(editUserData.status === 200){
-        const timestamp = new Date(editUserData.data.updatedAt)
+        const timestamp = new Date(editUserData.updatedAt)
         const now = `${timestamp.getHours()}:${(timestamp.getMinutes()<10?'0':'')}${timestamp.getMinutes()}`
         this.props.showSnackbar(`User updated at ${now}`)
       }else{
