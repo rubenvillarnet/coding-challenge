@@ -1,7 +1,6 @@
 var express = require('express')
 var router = express.Router()
-const User = require('../models/User')
-
+const User = require('../models/user')
 const swaggerUi = require('swagger-ui-express')
 const specs = require('../docs')
 
