@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
-import {hideSnackbar} from '../lib/redux/actions'
+
 import PropTypes from 'prop-types';
 
 import { Snackbar, Button } from '@material-ui/core';
 
-class SnackbarBottom extends Component {
+export default class SnackbarBottom extends Component {
 
   render() {
     const {status, message, hideSnackbar} = this.props
@@ -37,14 +36,3 @@ SnackbarBottom.propTypes = {
   message: PropTypes.string,
   hideSnackbar: PropTypes.func
 }
-
-const mapStateToProps = state => {
-  const { snackbar } = state
-  return { 
-    status: snackbar.status,
-    message:snackbar.message };
-};
-
-const mapDispatchToProps = {hideSnackbar}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SnackbarBottom)

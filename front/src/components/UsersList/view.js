@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux';
-import { listUsers, getUser, dismissUser, showSnackbar } from "../lib/redux/actions"
-import UserDetail from './UserDetail';
-import Topbar from './Topbar';
-import DataProvider from "../lib/dataProvider"
+import UserDetail from '../UserDetail';
+import Topbar from '../TopBar/view';
+import DataProvider from "../../lib/dataProvider"
+import { formatDate, formatTime } from '../../lib/utils'
+
 import PropTypes from 'prop-types';
 
 import { KeyboardDatePicker } from "@material-ui/pickers";
-import moment from "moment";
-import "moment/locale/es";
-
 
 import {
   Typography, Drawer, FormControl, InputLabel,
@@ -21,9 +18,7 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-moment.locale("es");
-
-class UsersList extends Component {
+export default class UsersList extends Component {
   constructor(props) {
     super(props)
     this.data = new DataProvider()
@@ -69,7 +64,7 @@ class UsersList extends Component {
     }).then(newUserData => {
       this.toggleDrawer(false)
       if (newUserData.status === 200) {
-        const now = moment(new Date()).format("HH:mm")
+        const now = formatTime(new Date())
         this.props.showSnackbar(`User ${newUserData.data.name} created at ${now} with id ${newUserData.data._id}`)
       } else {
         this.props.showSnackbar(`Something wrong has happened. Status: ${newUserData.status}`)
@@ -93,29 +88,29 @@ class UsersList extends Component {
 
   render() {
 
-    const { userData, userInfo} = this.props
+    const { userData, userInfo, classes} = this.props
     return (
       <React.Fragment>
        <Topbar />
-        <div className="Content">
+        <div className={classes.content}>
           {userData.length !== 0?
-            <div className="table-container">
-              <Typography component="h1" variant="h4" className="title">Users list</Typography>
-              <Paper className="paper">
+            <div className={classes.tableContainer}>
+              <Typography component="h1" variant="h4" className={classes.title}>Users list</Typography>
+              <Paper className={classes.title}>
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell className="row-title">First Name</TableCell>
-                      <TableCell className="row-title">Birthdate</TableCell>
-                      <TableCell className="row-title">More Info</TableCell>
-                      <TableCell className="row-title">Delete user</TableCell>
+                      <TableCell className={classes.rowTitle}>First Name</TableCell>
+                      <TableCell className={classes.rowTitle}>Birthdate</TableCell>
+                      <TableCell className={classes.rowTitle}>More Info</TableCell>
+                      <TableCell className={classes.rowTitle}>Delete user</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {userData.map(user => {
                       return <TableRow key={user._id}>
                         <TableCell>{user.name}</TableCell>
-                        <TableCell>{moment(user.birthdate).format("DD/MM/YYYY")}</TableCell>
+                        <TableCell>{formatDate(user.birthdate)}</TableCell>
                         <TableCell><Button 
                           onClick={e => this.showUserInfo(e, user._id)}
                           color="primary"><AccountCircleIcon />Info</Button></TableCell>
@@ -132,23 +127,23 @@ class UsersList extends Component {
                 variant="extended"
                 color="primary"
                 aria-label="Add"
-                className="new-user-button"
+                className={classes.newUserButton}
                 onClick={() => this.toggleDrawer(true)}>
                 <AddIcon />
                 New User
               </Fab>
               <Drawer
-                className="drawer"
+                className={classes.drawer}
                 anchor="right"
                 open={this.state.rightDrawer}
                 onClose={() => this.toggleDrawer(false)}>
-                <div className="new-user-container">
-                  <Paper className="form-container">
+                <div className={classes.NewUserContainer}>
+                  <Paper className={classes.formContainer}>
                   <Typography component="h2" variant="h6" align="center">Create new user</Typography>
                   <form
-                    className="new-user-form"
+                    className={classes.newUserForm}
                     onSubmit={e => this.createUser(e)}>
-                    <FormControl className="form-control">
+                    <FormControl className={classes.formControl}>
                       <InputLabel htmlFor="name">Name</InputLabel>
                       <Input
                         type="text"
@@ -174,7 +169,7 @@ class UsersList extends Component {
                   </Paper>
                   <Fab
                     color="secondary"
-                    className="close-button"
+                    className={classes.closeButton}
                     onClick={() => this.toggleDrawer(false)}>
                     <CloseIcon />
                   </Fab>
@@ -185,8 +180,8 @@ class UsersList extends Component {
           <Modal
             open={!!userInfo}
             onClose={() => this.props.dismissUser()}
-            className="modal-overlay">
-            <Paper className="modal-box">
+            className={classes.modalOverlay}>
+            <Paper className={classes.modalBox}>
               {userInfo ? <UserDetail /> : null}
             </Paper>
           </Modal>
@@ -212,20 +207,3 @@ UsersList.propTypes = {
   dismissUser: PropTypes.func,
   showSnackbar: PropTypes.func 
 }
-
-const mapDispatchToProps = {
-  listUsers,
-  getUser,
-  dismissUser,
-  showSnackbar
-}
-
-const mapStateToProps = state => {
-  const { userData, userInfo } = state.users
-  return {
-    userData,
-    userInfo
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersList)

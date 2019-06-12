@@ -1,19 +1,13 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux';
-import {listUsers,dismissUser, showSnackbar} from "../lib/redux/actions"
-import DataProvider from "../lib/dataProvider"
+import DataProvider from "../../lib/dataProvider"
 import PropTypes from 'prop-types';
-
+import { formatDate, formatTime } from '../../lib/utils'
 import { KeyboardDatePicker } from "@material-ui/pickers";
-import moment from "moment";
-import "moment/locale/es";
 
 import { Button, Typography, List, ListItem, ListItemText, FormControl, InputLabel, Input } from '@material-ui/core';
 
-moment.locale("es");
 
-
-class UserDetail extends Component {
+export default class UserDetail extends Component {
   constructor(props){
     super(props)
     this.data = new DataProvider()
@@ -44,7 +38,7 @@ class UserDetail extends Component {
       birthdate: this.state.selectedDate
     }).then(editUserData => {
       if(editUserData.status === 200){
-        const now = moment(new Date()).format("HH:mm")
+        const now = formatTime(new Date())
         this.props.showSnackbar(`User updated at ${now}`)
       }else{
         this.props.showSnackbar(`Something wrong has happened. Status: ${editUserData.status}`)
@@ -66,13 +60,14 @@ class UserDetail extends Component {
   }
 
   render() {
-    const { name, birthdate } = this.props.userInfo
+    const {userInfo, classes} = this.props
+    const { name, birthdate } = userInfo
     return (
-      <div className="user-detail">
+      <div>
         <Typography variant="h5">User info</Typography>
         {this.state.edit?
-          <form onSubmit={e => this.editUser(e)}>
-            <FormControl className="form-control">
+          <form onSubmit={e => this.editUser(e)} className={classes.form}>
+            <FormControl className={classes.formControl}>
               <InputLabel htmlFor="name">Name</InputLabel>
               <Input
                 required={true}
@@ -92,13 +87,13 @@ class UserDetail extends Component {
           type="submit"
           color="primary"
           variant="contained"
-          className="update-button">
+          className={classes.updateButton}>
           Update User
         </Button>
           </form>
           :<List>
           <ListItem><ListItemText primary="Name:" secondary={name}/> </ListItem>
-          <ListItem><ListItemText primary="Birthdate:" secondary={moment(birthdate).format("DD/MM/YYYY")}/></ListItem>
+          <ListItem><ListItemText primary="Birthdate:" secondary={formatDate(birthdate)}/></ListItem>
         </List>}
         
         <Button
@@ -110,7 +105,7 @@ class UserDetail extends Component {
           variant="contained"
           color="secondary"
           onClick={e => this.closeUserInfo(e)}
-          className="close-button"
+          className={classes.closeButton}
           >Close</Button>
       </div>
     )
@@ -126,15 +121,4 @@ UserDetail.propTypes = {
   showSnackbar: PropTypes.func 
 }
 
-const mapStateToProps = state => {
-  const { users } = state
-  return { userInfo: users.userInfo };
-};
 
-const mapDispatchToProps = {
-  listUsers,
-  dismissUser,
-  showSnackbar
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserDetail)

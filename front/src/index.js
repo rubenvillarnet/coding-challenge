@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-
+import { ThemeProvider } from '@material-ui/styles';
+import {theme} from './lib/theme'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 
 import { Provider } from 'react-redux'
 import {store} from './lib/redux/store'
@@ -16,7 +19,10 @@ ReactDOM.render(
   <Provider store={store}>
     <MuiPickersUtilsProvider utils={MomentUtils}>
       <Router>
+        <ThemeProvider theme={theme}>
+        <CssBaseline />
         <App />
+        </ThemeProvider>
       </Router>
     </MuiPickersUtilsProvider>
   </Provider>
