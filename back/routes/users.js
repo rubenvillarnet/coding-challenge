@@ -51,7 +51,6 @@ router.get('/', swaggerUi.setup(specs, options));
 
 router.get("/users/", function(req, res, next) {
   User.find({}, (err, users) => res.json(users))
-  console.log("home")
 });
 
 /**

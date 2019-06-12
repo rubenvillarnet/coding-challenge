@@ -40,6 +40,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const indexRouter = require('./routes/index');
+app.use('/', indexRouter);
+
 const usersRouter = require('./routes/users');
 app.use('/api', usersRouter);
 
