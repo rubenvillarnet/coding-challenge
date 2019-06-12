@@ -130,7 +130,7 @@ router.post("/users/", function(req, res, next){
   const newUser = new User({name, birthdate})
 
   newUser.save()
-  .then(user => res.json({...user, createdAt: new Date()}))
+  .then(user => res.json(user))
   .catch(err => res.status(500).send(err))
 });
 
