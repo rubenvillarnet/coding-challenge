@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import UserDetail from '../UserDetail';
-import Topbar from '../TopBar/view';
+import Topbar from '../TopBar';
 import DataProvider from "../../lib/dataProvider"
 import { formatDate, formatTime } from '../../lib/utils'
 

@@ -1,3 +1,8 @@
-import view from "./view"
+import { connect } from 'react-redux';
+import { showSnackbar } from "../../lib/redux/actions"
 
-export default view
+import styled from './styled'
+
+const mapDispatchToProps = { showSnackbar }
+
+export default connect(null, mapDispatchToProps)(styled)
