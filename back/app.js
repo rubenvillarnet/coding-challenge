@@ -46,4 +46,8 @@ app.use('/', indexRouter)
 const usersRouter = require('./routes/users')
 app.use('/api', usersRouter)
 
+app.use((req, res) => {
+  res.sendFile(__dirname + '/public/index.html')
+})
+
 module.exports = app
