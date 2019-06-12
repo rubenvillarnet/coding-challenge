@@ -1,14 +1,18 @@
-import {connect} from 'react-redux'
-import {hideSnackbar} from '../../lib/redux/actions'
+import { connect } from 'react-redux'
+import { hideSnackbar } from '../../lib/redux/actions'
 import view from './view'
 
 const mapStateToProps = state => {
   const { snackbar } = state
-  return { 
+  return {
     status: snackbar.status,
-    message:snackbar.message };
-};
+    message: snackbar.message
+  }
+}
 
-const mapDispatchToProps = {hideSnackbar}
+const mapDispatchToProps = { hideSnackbar }
 
-export default connect(mapStateToProps, mapDispatchToProps)(view)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(view)

@@ -1,12 +1,12 @@
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles'
 import view from './view'
 
 const styles = {
-  toolBar:{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    maxWidth: "1080px"
+  toolBar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    maxWidth: '1080px'
   }
 }
 

@@ -1,19 +1,19 @@
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles'
 import view from './view'
-import { theme } from '../../lib/theme';
+import { theme } from '../../lib/theme'
 
 const styles = {
-  form:{
-    display: "flex",
-    flexDirection: "column"
+  form: {
+    display: 'flex',
+    flexDirection: 'column'
   },
-  formControl:{
+  formControl: {
     marginBottom: theme.spacing(2)
   },
-  updateButton:{
+  updateButton: {
     marginBottom: theme.spacing(4)
   },
-  closeButton:{
+  closeButton: {
     marginLeft: theme.spacing(2)
   }
 }

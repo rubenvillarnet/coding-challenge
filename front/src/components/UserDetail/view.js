@@ -1,23 +1,22 @@
 import React, { Component } from 'react'
-import dataprovider from "../../lib/dataprovider"
-import PropTypes from 'prop-types';
+import dataprovider from '../../lib/dataprovider'
+import PropTypes from 'prop-types'
 import { formatDate, formatTime } from '../../lib/utils'
-import { KeyboardDatePicker } from "@material-ui/pickers";
+import { KeyboardDatePicker } from '@material-ui/pickers'
 
-import { Button, Typography, List, ListItem, ListItemText, FormControl, InputLabel, Input } from '@material-ui/core';
-
+import { Button, Typography, List, ListItem, ListItemText, FormControl, InputLabel, Input } from '@material-ui/core'
 
 export default class UserDetail extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.data = new dataprovider()
-    this.state={
+    this.state = {
       edit: false,
       selectedDate: new Date()
     }
   }
 
-  closeUserInfo(e){
+  closeUserInfo(e) {
     e.preventDefault()
     this.props.dismissUser()
   }
@@ -29,30 +28,32 @@ export default class UserDetail extends Component {
     })
   }
 
-  editUser(e){
+  editUser(e) {
     e.preventDefault()
-    const {name} = e.currentTarget.elements
-    this.data.edituser({
-      id: this.props.userInfo._id,
-      name: name.value,
-      birthdate: this.state.selectedDate
-    }).then(editUserData => {
-      if(editUserData.status === 200){
-        const now = formatTime(new Date())
-        this.props.showSnackbar(`User updated at ${now}`)
-      }else{
-        this.props.showSnackbar(`Something wrong has happened. Status: ${editUserData.status}`)
-      }
-      name.value = ""
-      this.setState({
-        ...this.state,
-        selectedDate: new Date()
+    const { name } = e.currentTarget.elements
+    this.data
+      .edituser({
+        id: this.props.userInfo._id,
+        name: name.value,
+        birthdate: this.state.selectedDate
       })
-      this.props.listUsers()
-    })
+      .then(editUserData => {
+        if (editUserData.status === 200) {
+          const now = formatTime(new Date())
+          this.props.showSnackbar(`User updated at ${now}`)
+        } else {
+          this.props.showSnackbar(`Something wrong has happened. Status: ${editUserData.status}`)
+        }
+        name.value = ''
+        this.setState({
+          ...this.state,
+          selectedDate: new Date()
+        })
+        this.props.listUsers()
+      })
   }
 
-  toggleEdit(){
+  toggleEdit() {
     this.setState({
       ...this.state,
       edit: !this.state.edit
@@ -60,53 +61,46 @@ export default class UserDetail extends Component {
   }
 
   render() {
-    const {userInfo, classes} = this.props
+    const { userInfo, classes } = this.props
     const { name, birthdate } = userInfo
     return (
       <div>
         <Typography variant="h5">User info</Typography>
-        {this.state.edit?
+        {this.state.edit ? (
           <form onSubmit={e => this.editUser(e)} className={classes.form}>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="name">Name</InputLabel>
-              <Input
-                required={true}
-                defaultValue={name}
-                type="text"
-                id="name"/>
+              <Input required={true} defaultValue={name} type="text" id="name" />
             </FormControl>
             <KeyboardDatePicker
-                      label="Birthday"
-                      value={birthdate}
-                      onChange={(newDate)=> this.handleDateChange(newDate)}
-                      animateYearScrolling
-                      disableFuture
-                      format="DD/MM/YYYY"
-                    />
-        <Button
-          type="submit"
-          color="primary"
-          variant="contained"
-          className={classes.updateButton}>
-          Update User
-        </Button>
+              label="Birthday"
+              value={birthdate}
+              onChange={newDate => this.handleDateChange(newDate)}
+              animateYearScrolling
+              disableFuture
+              format="DD/MM/YYYY"
+            />
+            <Button type="submit" color="primary" variant="contained" className={classes.updateButton}>
+              Update User
+            </Button>
           </form>
-          :<List>
-          <ListItem><ListItemText primary="Name:" secondary={name}/> </ListItem>
-          <ListItem><ListItemText primary="Birthdate:" secondary={formatDate(birthdate)}/></ListItem>
-        </List>}
-        
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={e=> this.toggleEdit()}
-          >{this.state.edit?"Cancel":"Edit"}</Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={e => this.closeUserInfo(e)}
-          className={classes.closeButton}
-          >Close</Button>
+        ) : (
+          <List>
+            <ListItem>
+              <ListItemText primary="Name:" secondary={name} />{' '}
+            </ListItem>
+            <ListItem>
+              <ListItemText primary="Birthdate:" secondary={formatDate(birthdate)} />
+            </ListItem>
+          </List>
+        )}
+
+        <Button variant="contained" color="primary" onClick={e => this.toggleEdit()}>
+          {this.state.edit ? 'Cancel' : 'Edit'}
+        </Button>
+        <Button variant="contained" color="secondary" onClick={e => this.closeUserInfo(e)} className={classes.closeButton}>
+          Close
+        </Button>
       </div>
     )
   }
@@ -117,8 +111,6 @@ UserDetail.propTypes = {
     name: PropTypes.string,
     birthdate: PropTypes.string
   }),
-  dismissUser: PropTypes.func ,
-  showSnackbar: PropTypes.func 
+  dismissUser: PropTypes.func,
+  showSnackbar: PropTypes.func
 }
-
-

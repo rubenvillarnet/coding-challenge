@@ -1,16 +1,17 @@
 import axios from 'axios'
 
-class HealthCheck{
-  constructor(){
+class HealthCheck {
+  constructor() {
     this.service = axios.create({
-      baseURL: "http://localhost:5000/"
+      baseURL: 'http://localhost:5000/'
     })
   }
 
-  status(){
-    return this.service.get(`health`)
-    .then(response => response.data)
-    .catch(error=>error)
+  status() {
+    return this.service
+      .get(`health`)
+      .then(response => response.data)
+      .catch(error => error)
   }
 }
 

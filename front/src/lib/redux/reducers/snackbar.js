@@ -1,23 +1,23 @@
 import { SHOW_SNACKBAR, HIDE_SNACKBAR } from '../action-types'
 
 const initialStore = {
-    status: false,
-    message: ""
+  status: false,
+  message: ''
 }
 
 export const snackbar = (store = initialStore, action) => {
-  switch(action.type){
+  switch (action.type) {
     case SHOW_SNACKBAR:
-      return{
-        ...store, 
+      return {
+        ...store,
         status: true,
         message: action.message
       }
     case HIDE_SNACKBAR:
-      return{
+      return {
         ...store,
         status: false,
-        message: ""
+        message: ''
       }
     default:
       return store

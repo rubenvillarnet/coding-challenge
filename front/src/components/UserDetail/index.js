@@ -1,12 +1,11 @@
-import {connect} from 'react-redux';
-import {listUsers,dismissUser, showSnackbar} from "../../lib/redux/actions"
+import { connect } from 'react-redux'
+import { listUsers, dismissUser, showSnackbar } from '../../lib/redux/actions'
 import styled from './styled'
-
 
 const mapStateToProps = state => {
   const { users } = state
-  return { userInfo: users.userInfo };
-};
+  return { userInfo: users.userInfo }
+}
 
 const mapDispatchToProps = {
   listUsers,
@@ -14,4 +13,7 @@ const mapDispatchToProps = {
   showSnackbar
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(styled)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(styled)

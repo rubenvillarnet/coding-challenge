@@ -1,26 +1,26 @@
-var express = require('express');
-var router = express.Router();
-const User = require("../models/User");
+var express = require('express')
+var router = express.Router()
+const User = require('../models/User')
 
-const swaggerUi = require('swagger-ui-express');
+const swaggerUi = require('swagger-ui-express')
 const specs = require('../docs')
 
 var options = {
   customCss: `.swagger-ui .topbar { display: none }
               .swagger-ui .scheme-container { display: none }`
-};
- 
-router.use('/', swaggerUi.serve);
-router.get('/', swaggerUi.setup(specs, options));
+}
+
+router.use('/', swaggerUi.serve)
+router.get('/', swaggerUi.setup(specs, options))
 
 /**
  * @swagger
- * 
+ *
  * definitions:
  *  User:
  *    type: object
  *    properties:
- *      user: 
+ *      user:
  *        type: string
  *        example: "bob"
  *      birthdate:
@@ -45,13 +45,13 @@ router.get('/', swaggerUi.setup(specs, options));
  *         description: all users
  *         schema:
  *            type: array
- *            items: 
+ *            items:
  *                $ref: "#definitions/User"
  */
 
-router.get("/users/", function(req, res, next) {
+router.get('/users/', function(req, res, next) {
   User.find({}, (err, users) => res.json(users))
-});
+})
 
 /**
  * @swagger
@@ -77,12 +77,12 @@ router.get("/users/", function(req, res, next) {
  *          $ref: "#definitions/User"
  */
 
-router.get("/users/:id", function(req, res, next){
+router.get('/users/:id', function(req, res, next) {
   User.findById(req.params.id, (err, user) => {
-    if(err) return res.status(500).send(err)
+    if (err) return res.status(500).send(err)
     return res.json(user)
-  });
-});
+  })
+})
 
 /**
  * @swagger
@@ -113,7 +113,7 @@ router.get("/users/:id", function(req, res, next){
  *            id:
  *              type: string
  *              example: "5cfc3b83dc5286255aec6eb9"
- *            user: 
+ *            user:
  *             type: string
  *             example: "bob"
  *            birthdate:
@@ -124,14 +124,15 @@ router.get("/users/:id", function(req, res, next){
  *        description: invalid parameters
  */
 
-router.post("/users/", function(req, res, next){
-  const { name, birthdate} = req.body
-  const newUser = new User({name, birthdate})
+router.post('/users/', function(req, res, next) {
+  const { name, birthdate } = req.body
+  const newUser = new User({ name, birthdate })
 
-  newUser.save()
-  .then(user => res.json(user))
-  .catch(err => res.status(500).send(err))
-});
+  newUser
+    .save()
+    .then(user => res.json(user))
+    .catch(err => res.status(500).send(err))
+})
 
 /**
  * @swagger
@@ -167,7 +168,7 @@ router.post("/users/", function(req, res, next){
  *            id:
  *              type: string
  *              example: "5cfc3b83dc5286255aec6eb9"
- *            user: 
+ *            user:
  *             type: string
  *             example: "bob"
  *            birthdate:
@@ -178,16 +179,16 @@ router.post("/users/", function(req, res, next){
  *        description: invalid parameters
  */
 
-router.patch("/users/:id", function(req, res, next){
-  const { name, birthdate} = req.body
-  User.findByIdAndUpdate(req.params.id, {name, birthdate}, (err,user) =>{
+router.patch('/users/:id', function(req, res, next) {
+  const { name, birthdate } = req.body
+  User.findByIdAndUpdate(req.params.id, { name, birthdate }, (err, user) => {
     if (err) {
       console.log(err)
-      return res.status(500).send(err);
+      return res.status(500).send(err)
     }
-    return res.json({...user, updatedAt: new Date()})
+    return res.json({ ...user, updatedAt: new Date() })
   })
-});
+})
 
 /**
  * @swagger
@@ -217,7 +218,7 @@ router.patch("/users/:id", function(req, res, next){
  *            id:
  *              type: string
  *              example: "5cfc3b83dc5286255aec6eb9"
- *            user: 
+ *            user:
  *             type: string
  *             example: "bob"
  *            birthdate:
@@ -228,14 +229,13 @@ router.patch("/users/:id", function(req, res, next){
  *        description: invalid parameters
  */
 
-router.delete("/users/:id", function(req, res, next){
+router.delete('/users/:id', function(req, res, next) {
   User.findByIdAndDelete(req.params.id, (err, user) => {
     if (err) {
-      return res.status(500).send(err);
+      return res.status(500).send(err)
     }
     return res.json(user)
   })
+})
 
-});
-
-module.exports = router;
+module.exports = router
