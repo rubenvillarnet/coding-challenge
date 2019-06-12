@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import HealthCheck from '../../lib/healthCheck'
+import PropTypes from 'prop-types'
 
 import { AppBar, Toolbar, Typography, Button } from '@material-ui/core'
 
@@ -28,4 +29,9 @@ export default class Topbar extends Component {
       </AppBar>
     )
   }
+}
+
+Topbar.propTypes = {
+  classes: PropTypes.object,
+  showSnackbar: PropTypes.func
 }

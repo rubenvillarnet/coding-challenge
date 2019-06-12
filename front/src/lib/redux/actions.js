@@ -21,7 +21,7 @@ export const getUser = id => {
     return data
       .getUser(id)
       .then(userInfo => dispatch({ type: GET_USER, userInfo: userInfo }))
-      .catch(error => console.log(error))
+      .catch(error => error)
   }
 }
 

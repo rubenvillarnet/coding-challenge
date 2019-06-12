@@ -95,7 +95,7 @@ export default class UserDetail extends Component {
           </List>
         )}
 
-        <Button variant="contained" color="primary" onClick={e => this.toggleEdit()}>
+        <Button variant="contained" color="primary" onClick={() => this.toggleEdit()}>
           {this.state.edit ? 'Cancel' : 'Edit'}
         </Button>
         <Button variant="contained" color="secondary" onClick={e => this.closeUserInfo(e)} className={classes.closeButton}>
@@ -108,9 +108,12 @@ export default class UserDetail extends Component {
 
 UserDetail.propTypes = {
   userInfo: PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
     birthdate: PropTypes.string
   }),
   dismissUser: PropTypes.func,
-  showSnackbar: PropTypes.func
+  showSnackbar: PropTypes.func,
+  listUsers: PropTypes.func,
+  classes: PropTypes.object
 }

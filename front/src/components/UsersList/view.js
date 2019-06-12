@@ -201,5 +201,6 @@ UsersList.propTypes = {
   listUsers: PropTypes.func,
   getUser: PropTypes.func,
   dismissUser: PropTypes.func,
-  showSnackbar: PropTypes.func
+  showSnackbar: PropTypes.func,
+  classes: PropTypes.object
 }
