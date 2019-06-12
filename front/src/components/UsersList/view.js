@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import UserDetail from '../UserDetail';
 import Topbar from '../TopBar';
-import DataProvider from "../../lib/dataProvider"
+import dataprovider from "../../lib/dataprovider"
 import { formatDate, formatTime } from '../../lib/utils'
 
 import PropTypes from 'prop-types';
@@ -21,7 +21,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 export default class UsersList extends Component {
   constructor(props) {
     super(props)
-    this.data = new DataProvider()
+    this.data = new dataprovider()
     this.state = {
       rightDrawer: false,
       selectedDate: new Date()

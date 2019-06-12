@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-class DataProvider{
+class dataprovider{
   constructor(){
     this.service = axios.create({
       baseURL: "http://localhost:5000/api/"
@@ -39,4 +39,4 @@ class DataProvider{
   }
 }
 
-export default DataProvider
+export default dataprovider

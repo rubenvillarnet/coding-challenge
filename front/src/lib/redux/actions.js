@@ -1,7 +1,7 @@
-import DataProvider from "../dataProvider"
+import dataprovider from "../dataprovider"
 import { DISMISS_USER, LIST_USERS, GET_USER, SHOW_SNACKBAR, HIDE_SNACKBAR} from './action-types'
 
-const data = new DataProvider()
+const data = new dataprovider()
 
 export const dismissUser = () =>{
   return {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import DataProvider from "../../lib/dataProvider"
+import dataprovider from "../../lib/dataprovider"
 import PropTypes from 'prop-types';
 import { formatDate, formatTime } from '../../lib/utils'
 import { KeyboardDatePicker } from "@material-ui/pickers";
@@ -10,7 +10,7 @@ import { Button, Typography, List, ListItem, ListItemText, FormControl, InputLab
 export default class UserDetail extends Component {
   constructor(props){
     super(props)
-    this.data = new DataProvider()
+    this.data = new dataprovider()
     this.state={
       edit: false,
       selectedDate: new Date()
