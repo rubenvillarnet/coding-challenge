@@ -98,7 +98,7 @@ class UserDetail extends Component {
           </form>
           :<List>
           <ListItem><ListItemText primary="Name:" secondary={name}/> </ListItem>
-          <ListItem><ListItemText primary="Birthdate:" secondary={birthdate}/></ListItem>
+          <ListItem><ListItemText primary="Birthdate:" secondary={moment(birthdate).format("DD/MM/YYYY")}/></ListItem>
         </List>}
         
         <Button

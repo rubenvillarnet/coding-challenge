@@ -18,6 +18,8 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 moment.locale("es");
 
@@ -68,7 +70,7 @@ class UsersList extends Component {
       this.toggleDrawer(false)
       if (newUserData.status === 200) {
         const now = moment(new Date()).format("HH:mm")
-        this.props.showSnackbar(`User "${newUserData.data.name}" created at ${now} with id ${newUserData.data._id}`)
+        this.props.showSnackbar(`User ${newUserData.data.name} created at ${now} with id ${newUserData.data._id}`)
       } else {
         this.props.showSnackbar(`Something wrong has happened. Status: ${newUserData.status}`)
       }
@@ -106,19 +108,20 @@ class UsersList extends Component {
                       <TableCell className="row-title">First Name</TableCell>
                       <TableCell className="row-title">Birthdate</TableCell>
                       <TableCell className="row-title">More Info</TableCell>
+                      <TableCell className="row-title">Delete user</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {userData.map(user => {
                       return <TableRow key={user._id}>
                         <TableCell>{user.name}</TableCell>
-                        <TableCell>{user.birthdate}</TableCell>
+                        <TableCell>{moment(user.birthdate).format("DD/MM/YYYY")}</TableCell>
                         <TableCell><Button 
                           onClick={e => this.showUserInfo(e, user._id)}
-                          color="primary"><AddIcon />Info</Button></TableCell>
+                          color="primary"><AccountCircleIcon />Info</Button></TableCell>
                           <TableCell><Button 
                           onClick={e => this.deleteUser(e, user._id)}
-                          color="primary"><AddIcon />Delete</Button></TableCell>
+                          color="secondary" variant="contained"><DeleteIcon />Delete</Button></TableCell>
                       </TableRow>
                     })}
                   </TableBody>
@@ -150,6 +153,7 @@ class UsersList extends Component {
                       <Input
                         type="text"
                         id="name"
+                        required
                       />
                     </FormControl>
                     <KeyboardDatePicker
