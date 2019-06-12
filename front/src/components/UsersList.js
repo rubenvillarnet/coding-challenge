@@ -47,6 +47,17 @@ class UsersList extends Component {
     })
   }
 
+  deleteUser(e, id) {
+    e.preventDefault()
+    this.data.deleteUser(id)
+    .then(info => {
+
+      this.props.showSnackbar(`User ${info.name} was deleted sucessfuly.`)
+      
+      this.props.listUsers()
+    })
+  }
+
   createUser(e) {
     e.preventDefault()
     const { name } = e.currentTarget.elements
@@ -56,9 +67,8 @@ class UsersList extends Component {
     }).then(newUserData => {
       this.toggleDrawer(false)
       if (newUserData.status === 200) {
-        const timestamp = new Date(newUserData.createdAt)
-        const now = `${timestamp.getHours()}:${(timestamp.getMinutes() < 10 ? '0' : '')}${timestamp.getMinutes()}`
-        this.props.showSnackbar(`User created at ${now} with id ${newUserData._id}`)
+        const now = moment(new Date()).format("HH:mm")
+        this.props.showSnackbar(`User "${newUserData.data.name}" created at ${now} with id ${newUserData.data._id}`)
       } else {
         this.props.showSnackbar(`Something wrong has happened. Status: ${newUserData.status}`)
       }
@@ -106,6 +116,9 @@ class UsersList extends Component {
                         <TableCell><Button 
                           onClick={e => this.showUserInfo(e, user._id)}
                           color="primary"><AddIcon />Info</Button></TableCell>
+                          <TableCell><Button 
+                          onClick={e => this.deleteUser(e, user._id)}
+                          color="primary"><AddIcon />Delete</Button></TableCell>
                       </TableRow>
                     })}
                   </TableBody>

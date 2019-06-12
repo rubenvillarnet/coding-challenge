@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
-import {dismissUser, showSnackbar} from "../lib/redux/actions"
+import {listUsers,dismissUser, showSnackbar} from "../lib/redux/actions"
 import DataProvider from "../lib/dataProvider"
 import PropTypes from 'prop-types';
 
@@ -39,13 +39,12 @@ class UserDetail extends Component {
     e.preventDefault()
     const {name} = e.currentTarget.elements
     this.data.edituser({
-      id: this.props.userInfo.id,
+      id: this.props.userInfo._id,
       name: name.value,
       birthdate: this.state.selectedDate
     }).then(editUserData => {
       if(editUserData.status === 200){
-        const timestamp = new Date(editUserData.updatedAt)
-        const now = `${timestamp.getHours()}:${(timestamp.getMinutes()<10?'0':'')}${timestamp.getMinutes()}`
+        const now = moment(new Date()).format("HH:mm")
         this.props.showSnackbar(`User updated at ${now}`)
       }else{
         this.props.showSnackbar(`Something wrong has happened. Status: ${editUserData.status}`)
@@ -133,6 +132,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
+  listUsers,
   dismissUser,
   showSnackbar
 }
