@@ -8,7 +8,6 @@ class dataprovider {
   }
 
   listUsers() {
-    console.log(process.env.REACT_APP_URL)
     return this.service
       .get(`users`)
       .then(response => response.data)

@@ -18,7 +18,7 @@ mongoose
 
 const app = express()
 
-var allowedOrigins = ['http://localhost:3000', 'http://yourapp.com']
+var allowedOrigins = ['http://localhost:3000', 'http://localhost:5000', 'https://fullstack-coding-challenge.herokuapp.com/']
 app.use(
   cors({
     origin: function(origin, callback) {
