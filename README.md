@@ -31,8 +31,8 @@ The front is bootstrapped from [Create React App](<https://facebook.github.io/cr
 - **React**: JS frontend library.
 - **Redux**: for state management.
 - **Material UI**: React's components library that follows Google's Material Design Guidelines.
-- **Moment**: JS library for date handling.
-- **Axios**: 
+- **Moment**: JS library for date manipulation.
+- **Axios**: promised based http client.
 
 ## Installation
 
@@ -40,9 +40,34 @@ After you downloaded the files, you need to perform the following actions:
 
 ####  Run the back
 
+You must have [Nodemon](<https://www.npmjs.com/package/nodemon>) installed globally in order to run the back in dev mode.
+
 In the *back*  folder:
 
-- Run `npm install`
+- Run `npm install`in order to install al required packages.
+
+- Create a *.env* file with the following values:
+
+  **HOST**=*server_hostname*
+
+  **PORT**=*server_port*
+
+  **DB**=*database_connection_string*
+
+  **DBHOST**=*database_host*
+
+  **DBPORT**=*database_port*
+
+- Run `npm run dev`
+
+#### Run the front
+
+In the *front* folder:
+
+* Run `npm install`
+* Create a *.env.development* file with the value `REACT_APP_API=local_back_hostname`
+* Create a *.env.production* file with the value `REACT_APP_API=remote_back_hostname`
+* Run `npm start`
 
 ## Give it a try!
 
