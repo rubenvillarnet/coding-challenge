@@ -3,7 +3,7 @@ import axios from 'axios'
 class dataprovider {
   constructor() {
     this.service = axios.create({
-      baseURL: `${process.env.REACT_APP_URL}/api`
+      baseURL: `${process.env.REACT_APP_API}/api`
     })
   }
 
