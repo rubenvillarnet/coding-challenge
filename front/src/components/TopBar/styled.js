@@ -6,7 +6,9 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    maxWidth: '1080px'
+    width: '100%',
+    maxWidth: '1080px',
+    margin: 'auto'
   }
 }
 

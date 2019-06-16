@@ -72,14 +72,7 @@ export default class UserDetail extends Component {
               <InputLabel htmlFor="name">Name</InputLabel>
               <Input required={true} defaultValue={name} type="text" id="name" />
             </FormControl>
-            <KeyboardDatePicker
-              label="Birthday"
-              value={birthdate}
-              onChange={newDate => this.handleDateChange(newDate)}
-              animateYearScrolling
-              disableFuture
-              format="DD/MM/YYYY"
-            />
+            <KeyboardDatePicker label="Birthday" value={birthdate} onChange={newDate => this.handleDateChange(newDate)} disableFuture format="DD/MM/YYYY" />
             <Button type="submit" color="primary" variant="contained" className={classes.updateButton}>
               Update User
             </Button>

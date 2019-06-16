@@ -47,6 +47,9 @@ const styles = {
     flexDirection: 'column',
     width: '250px'
   },
+  createUserButton: {
+    marginTop: theme.spacing(2)
+  },
   formControl: {
     marginBottom: theme.spacing(2)
   },

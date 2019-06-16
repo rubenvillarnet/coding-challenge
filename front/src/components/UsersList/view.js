@@ -162,11 +162,10 @@ export default class UsersList extends Component {
                         label="Birthday"
                         value={this.state.selectedDate}
                         onChange={newDate => this.handleDateChange(newDate)}
-                        animateYearScrolling
                         disableFuture
                         format="DD/MM/YYYY"
                       />
-                      <Button type="submit" color="primary" variant="contained">
+                      <Button className={classes.createUserButton} type="submit" color="primary" variant="contained">
                         Create User
                       </Button>
                     </form>
