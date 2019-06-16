@@ -98,6 +98,7 @@ export default class UsersList extends Component {
 
   render() {
     const { userData, userInfo, classes } = this.props
+    if (!Array.isArray(userData)) return <p>We're sorry but an error has ocurred in the server.</p>
     return (
       <React.Fragment>
         <Topbar />
@@ -190,13 +191,16 @@ export default class UsersList extends Component {
 
 UsersList.propTypes = {
   user: PropTypes.object,
-  userData: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      birthdate: PropTypes.string
-    })
-  ),
+  userData: PropTypes.oneOfType([
+    PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        birthdate: PropTypes.string
+      })
+    ),
+    PropTypes.object
+  ]),
   userInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   listUsers: PropTypes.func,
   getUser: PropTypes.func,

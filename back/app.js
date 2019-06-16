@@ -18,7 +18,7 @@ mongoose
 
 const app = express()
 
-var allowedOrigins = [process.env.REMOTEHOST]
+var allowedOrigins = [process.env.HOST, 'http://localhost:3000']
 app.use(
   cors({
     origin: function(origin, callback) {
