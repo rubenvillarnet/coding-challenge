@@ -1,5 +1,5 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
 const User = require('../models/user')
 const swaggerUi = require('swagger-ui-express')
 const specs = require('../docs')
@@ -49,7 +49,10 @@ router.get('/', swaggerUi.setup(specs, options))
  */
 
 router.get('/users/', function(req, res, next) {
-  User.find({}, (err, users) => res.json(users))
+  User.find({}, (err, users) => {
+    if (err) return res.status(500).send(error)
+    return res.json(users)
+  })
 })
 
 /**
@@ -78,7 +81,7 @@ router.get('/users/', function(req, res, next) {
 
 router.get('/users/:id', function(req, res, next) {
   User.findById(req.params.id, (err, user) => {
-    if (err) return res.status(500).send(err)
+    if (err) return res.status(404).send(err)
     return res.json(user)
   })
 })
@@ -130,7 +133,7 @@ router.post('/users/', function(req, res, next) {
   newUser
     .save()
     .then(user => res.json(user))
-    .catch(err => res.status(500).send(err))
+    .catch(err => res.status(206).send(err))
 })
 
 /**

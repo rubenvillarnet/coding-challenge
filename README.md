@@ -54,11 +54,14 @@ In the *back*  folder:
 
   **DB**=*database_connection_string*
 
+  **TESTDB**=*database_connection_string* (*it will be a temporary database were tests will be done)
+
   **DBHOST**=*database_host*
 
   **DBPORT**=*database_port*
 
-- Run `npm run dev`
+- Run `npm run dev` to run it in development mode.
+- You can also run some basic tests with `npm run test`.
 
 #### Run the front
 

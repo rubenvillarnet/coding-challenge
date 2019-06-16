@@ -7,8 +7,9 @@ const logger = require('morgan')
 const mongoose = require('mongoose')
 const debug = require('debug')('back:app')
 
+debug('entorno', process.env.NODE_ENV === 'test' ? 'test' : 'production')
 mongoose
-  .connect(process.env.DB, { useNewUrlParser: true })
+  .connect(process.env.NODE_ENV === process.env.TESTDB ? process.env.DB : process.env.DB, { useNewUrlParser: true })
   .then(x => {
     debug(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
